@@ -1,0 +1,39 @@
+body{
+  background-color: #eee;
+}
+
+h2{
+  background-color: azure;
+
+}
+
+/*.numer1 { background: #354f5d; width: 750px; height: 600px; text-align: center; }
+*/
+.navbar a {
+    color: #fff;
+}
+
+.center {
+text-align: center;
+}
+/*.vcenter {
+padding-top: 30px;
+padding-bottom: 30px;
+}*/
+
+#frm{
+    border: solid gray 1px;
+    width: 20%;
+    border-radius: 5px;
+    margin: 100px auto;
+    background: bisque;
+    padding: 50px;
+    text-align: center;
+}
+
+#btn{
+    color: #fff;
+    background: #337ab7;
+    padding: 5px;
+    margin-left: 70%;
+}

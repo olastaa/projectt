@@ -14,20 +14,25 @@ if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>Project Tracker</title>
+        <title>ProjectTracker</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
-        <h2>Witamy w aplikacji<b>Project Tracker</b></h2> <br />
+    <body onload="start();">
+        <div id="frm">
+            <br><br />
+            <h2>Witamy w aplikacji <b><br />Project Tracker!</b><h2/> <br />
         
         <form action="zaloguj.php" method="post"> 
-            LOGIN: <br /> <input type="text" name="login" /> <br />
-            HASŁO: <br /> <input type="password" name="haslo" /> <br />
+            Login: <input type="text" name="login" /><br /><br />
+            Hasło: <input type="password" name="haslo" /><br /><br />
             <input type="submit" value="Logowanie" />
         </form>
-        
+        </div>
         <?php
         if(isset($_SESSION['blad'])) echo $_SESSION['blad'];
         ?>
     </body>
 </html>
+
