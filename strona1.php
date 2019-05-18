@@ -41,6 +41,9 @@ if(!isset($_SESSION['zalogowany']))
       <li class="nav-item">
         <a class="nav-link" href="#">Pracownicy</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Zadania</a>
+      </li>
     </ul>
   </div>
 </nav>
