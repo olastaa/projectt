@@ -2,24 +2,71 @@
 
 session_start();
 
-if(isset($_POST['email']))
+if(isset($_POST['Projekt']))
 {
     //udana walidajca, tak!
     $wszystko_OK=true;
     //Sprawdzenie User
-    $user = $_POST['user'];
+    $Projekt = $_POST['Projekt'];
 
     //Sprawdzenie dlugosci usera
-    if((strlen($user)<3) || (strlen($user)>20))
+    if((strlen($Projekt)<3) || (strlen($Projekt)>20))
     {
         $wszystko_OK=false;
-        $_SESSION['e_user']="User musi posiadać od 3 do 20 znaków";
+        $_SESSION['e_Projekt']="Projekt musi posiadać od 3 do 20 znaków";
     }
-        if($wszystko_OK==true)
+    
+    if(ctype_alnum($Projekt)==false)
+    {
+        $wszystko_OK=false;
+        $_SESSION['Projekt']="Projekt może skłdać się z liter i cyfr (bez polskich znaków)";
+    }
+    $haslo_hash = password_hash("admin1", PASSWORD_DEFAULT);
+    /* robocze wyświtlanie Hasha przez php:
+    echo $haslo_hash; exit(); 
+    */
+    
+    // chekbox - czy dane sa poprawne: //
+    if(!isset($_POST['akceptacja']))
+        {
+        $wszystko_OK=false;
+        $_SESSION['e_akceptacja']="Zaznacz pole 'Dane są poprawne'";
+    }
+    require_once "connect.php";
+    mysqli_report(MYSQLI_REPORT_STRICT);
+    
+    try{
+        $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+        if ($polaczenie->connect_errno!=0)
+        {
+            throw new Exception(mysqli_connect_errno());
+        }
+        else
+        {
+            $rezultat = $polaczenie->query("SELECT ID FROM projekty WHERE Projekt='$Projekt'");
+            if(!rezultat) throw new Exception($polaczenie->error);
+            
+            $ile_takich_Projektow = $rezultat->num_rows;
+            if($ile_takich_Projektow>0)
+            {
+                $wszystko_OK=false;
+                $_SESSION['e_Projekt']="Nazwa projektu już istnieje!";
+            }
+            
+            $polaczenie->close();
+        }
+        
+    } catch (Exception $ex) {
+echo '<span style="color:red;">Bląd Serwera - juhu</span>';
+echo '<br />Informacja developerska: '.$ex;
+    }
+    
+    
+       /* if($wszystko_OK==true)
         {
             //udana walidacja
             echo "Udana walidacja!"; exit();
-        }
+        } */
         }
     
 ?>
@@ -42,23 +89,37 @@ if(isset($_POST['email']))
     </head>
     <body>
         <form method="post">
-            User: <br/> <input type="text" name="user" /><br />
+            Nazwa nowego projektu: <br/> <input type="text" name="Projekt" /><br />
             <?php
-            if(isset($_SESSION['e_user']))
+            if(isset($_SESSION['e_Projekt']))
             {
-            echo'<div class="error">'.$_SESSION['e_user'].'</div>';
-            unset($_SESSION['e_user']);
+            echo'<div class="error">'.$_SESSION['e_Projekt'].'</div>';
+            unset($_SESSION['e_Projekt']);
                     }
                     ?>
-            Email: <br/> <input type="text" name="email" /><br />
-            Nazwa Projektu: <br/> <input type="text" name="Projekt" /><br />
-           Zadanie: <br/> <input type="text" name="Zadanie" /><br />
-            Czas realizacji: <br/> <input type="text" name="Czas realizacji" /><br />
-            Twoje Haslo: <br/> <input type="password" name="haslo1" /><br />
+            Projekt dla klienta: <br/> <input type="text" name="ID_Klienta" /><br />
+            Właściciel projektu: <br/> <input type="text" name="ID_Pracownika" /><br />
+            Data Start: <br/> <input type="datetime-local" name="Data_start" /><br />
+            Data Stop: <br/> <input type="datetime" name="Data_stop" /><br />     
+<!-- Formularz Hashowania hasła: <br/> <input type="password" name="haslo" /><br /> -->
+            <?php
+            if(isset($_SESSION['e_haslo']))
+            {
+            echo'<div class="error">'.$_SESSION['e_haslo'].'</div>';
+            unset($_SESSION['e_haslo']);
+                    }
+                    ?>
             <br/>
             <label>
                 <input type="checkbox" name="akceptacja" /> Dane są porawne
             </label><br />
+            <?php
+            if(isset($_SESSION['e_akceptacja']))
+            {
+            echo'<div class="error">'.$_SESSION['e_akceptacja'].'</div>';
+            unset($_SESSION['e_akceptacja']);
+                    }
+                    ?>
             <br />
             <input type="submit" value="DODAJ" /><br />
             <br />
