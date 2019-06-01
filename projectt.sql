@@ -1,22 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Czas generowania: 19 Maj 2019, 21:32
--- Wersja serwera: 10.1.36-MariaDB
--- Wersja PHP: 7.2.11
+-- Host: localhost:8889
+-- Czas generowania: 01 Cze 2019, 12:53
+-- Wersja serwera: 5.7.25
+-- Wersja PHP: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Baza danych: `projectt`
@@ -64,12 +56,12 @@ CREATE TABLE `pracownicy` (
 --
 
 INSERT INTO `pracownicy` (`ID_Pracownik`, `user`, `imie_nazwisko`, `email`, `pass`, `ID_Roles`) VALUES
-(1, 'Lukas', 'Lukasz Sucharski', 'lukasuch@yahoo.de', 'admin', 1),
-(2, 'Ola', 'Aleksandra Burzych', 'aburzych@gmail.com', 'drugiadmin', 2),
-(3, 'Asia', 'Joanna Pawlik', 'joanna.pawlik85@gmail.com', 'gosc', 3),
-(4, 'Zbychu', 'Zbigniew Wielki', 'pifko88@wp.pl', 'zbysio', 3),
-(5, 'Gienia', 'Genowefa Zielona', 'olaburzych@yahoo.com', 'GeZiel', 3),
-(6, 'Alfredo', 'Alfred Hitchcock', 'olaburzych@wp.pl', 'Batman', 2);
+(1, 'Lukas', 'Lukasz Sucharski', 'lukasuch@yahoo.de', '$2y$10$SThaUcwFq0KqopXS0jmVuOhycW7hcJm/BZhgy3HJ.WS5ZEUSPCzma', 1),
+(2, 'Ola', 'Aleksandra Burzych', 'aburzych@gmail.com', '$2y$10$Pl0fWyucpICgwQ84JgvVc.gJIblZkR2psH3erGHXaFDU4sChqlXUi', 2),
+(3, 'Asia', 'Joanna Pawlik', 'joanna.pawlik85@gmail.com', '$2y$10$sKyCruyy1sTGXh/dd6qEA./jucTmZMQ2C1jyBdRvQhAZ5EWPobZO.', 3),
+(4, 'Zbychu', 'Zbigniew Wielki', 'pifko88@wp.pl', '$2y$10$yVlTYBhca.DmeRY83K7deuI49s441WdsuMh54M4iOW9WOfOf0/5sG', 3),
+(5, 'Gienia', 'Genowefa Zielona', 'olaburzych@yahoo.com', '$2y$10$vOv.sWbAxTO0la3uqH.z5.ph52eWZXAsJINsII0UjDp4p2GRW0tNm', 3),
+(6, 'Alfredo', 'Alfred Hitchcock', 'olaburzych@wp.pl', '$2y$10$yrj7Raylnq1jBVQlWYj/lu4CrPZka.DQ./rqRXzpo1yxYY6xnloxW', 2);
 
 -- --------------------------------------------------------
 
@@ -93,6 +85,42 @@ CREATE TABLE `projekty` (
 INSERT INTO `projekty` (`ID_Projektu`, `Projekt`, `ID_Klienta`, `ID_Pracownik`, `Data_start`, `Data_stop`) VALUES
 (1, 'Sklep internetowy Buty24.pl', 1, 2, '2019-05-18', '2019-05-22'),
 (2, 'Baza dla Opony.pl', 3, 6, '2019-05-18', '2019-05-29');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `roles`
+--
+
+CREATE TABLE `roles` (
+  `ID_Roles` int(11) NOT NULL,
+  `rolename` text CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `admin` tinyint(1) NOT NULL,
+  `czytaj` tinyint(1) NOT NULL,
+  `edytuj` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `roles`
+--
+
+INSERT INTO `roles` (`ID_Roles`, `rolename`, `admin`, `czytaj`, `edytuj`) VALUES
+(1, 'admin', 1, 0, 0),
+(2, 'pm', 0, 0, 1),
+(3, 'gosc', 0, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `tracker`
+--
+
+CREATE TABLE `tracker` (
+  `ID_Tracker` int(11) NOT NULL,
+  `ID_Projekt` int(11) NOT NULL,
+  `ID_Zadanie` int(11) NOT NULL,
+  `ID_Pracownik` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -131,13 +159,31 @@ ALTER TABLE `klienci`
 -- Indeksy dla tabeli `pracownicy`
 --
 ALTER TABLE `pracownicy`
-  ADD PRIMARY KEY (`ID_Pracownik`);
+  ADD PRIMARY KEY (`ID_Pracownik`),
+  ADD KEY `ID_Roles` (`ID_Roles`);
 
 --
 -- Indeksy dla tabeli `projekty`
 --
 ALTER TABLE `projekty`
-  ADD PRIMARY KEY (`ID_Projektu`);
+  ADD PRIMARY KEY (`ID_Projektu`),
+  ADD KEY `ID_Klienta` (`ID_Klienta`),
+  ADD KEY `ID_Pracownik` (`ID_Pracownik`);
+
+--
+-- Indeksy dla tabeli `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`ID_Roles`);
+
+--
+-- Indeksy dla tabeli `tracker`
+--
+ALTER TABLE `tracker`
+  ADD PRIMARY KEY (`ID_Tracker`),
+  ADD KEY `ID_Projekt` (`ID_Projekt`),
+  ADD KEY `ID_Zadanie` (`ID_Zadanie`),
+  ADD KEY `ID_Pracownik` (`ID_Pracownik`);
 
 --
 -- Indeksy dla tabeli `zadania`
@@ -168,12 +214,44 @@ ALTER TABLE `projekty`
   MODIFY `ID_Projektu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT dla tabeli `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `ID_Roles` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `tracker`
+--
+ALTER TABLE `tracker`
+  MODIFY `ID_Tracker` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT dla tabeli `zadania`
 --
 ALTER TABLE `zadania`
   MODIFY `ID_Zadanie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `pracownicy`
+--
+ALTER TABLE `pracownicy`
+  ADD CONSTRAINT `pracownicy_ibfk_1` FOREIGN KEY (`ID_Roles`) REFERENCES `roles` (`ID_Roles`);
+
+--
+-- Ograniczenia dla tabeli `projekty`
+--
+ALTER TABLE `projekty`
+  ADD CONSTRAINT `projekty_ibfk_1` FOREIGN KEY (`ID_Klienta`) REFERENCES `klienci` (`ID_Klienta`),
+  ADD CONSTRAINT `projekty_ibfk_2` FOREIGN KEY (`ID_Pracownik`) REFERENCES `pracownicy` (`ID_Pracownik`);
+
+--
+-- Ograniczenia dla tabeli `tracker`
+--
+ALTER TABLE `tracker`
+  ADD CONSTRAINT `tracker_ibfk_1` FOREIGN KEY (`ID_Zadanie`) REFERENCES `zadania` (`ID_Zadanie`),
+  ADD CONSTRAINT `tracker_ibfk_2` FOREIGN KEY (`ID_Projekt`) REFERENCES `projekty` (`ID_Projektu`),
+  ADD CONSTRAINT `tracker_ibfk_3` FOREIGN KEY (`ID_Pracownik`) REFERENCES `pracownicy` (`ID_Pracownik`);
