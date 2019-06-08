@@ -9,7 +9,6 @@ if((!isset($_POST['login'])) ||(!isset($_POST['haslo'])))
 }
 
 require_once "connect.php";
-
 $polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
 
 if ($polaczenie->connect_errno!=0)
@@ -39,7 +38,8 @@ if ($polaczenie->connect_errno!=0)
           if(password_verify($haslo, $wiersz['pass']))
           {
                 $_SESSION['zalogowany'] = true;
-                $_SESSION['user'] = $wiersz['user'];
+                $_SESSION['user'] = $wiersz['user'];                
+                $_SESSION['ID_Pracownik'] = $wiersz['ID_Pracownik'];
                 $_SESSION['Projekt'] = $wiersz['Projekt'];
                 $_SESSION['Klient'] = $wiersz['Klient'];
                 $_SESSION['Pracownik'] = $wiersz['Pracownik'];

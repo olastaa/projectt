@@ -1,39 +1,160 @@
-body{
-  background-color: #eee;
+body
+{
+  background-image: url("hexellence.png");
+	font-size: 16px;
+	font-family: 'Roboto', sans-serif;
+	color: grey;
 }
 
-h2{
-  background-color: azure;
-
+h1, h2
+{
+  font-family: 'Ubuntu', sans-serif;
+	font-size: 24px;
+	font-weight: 200;
+	text-align: left;
+	letter-spacing: 3px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+  border-radius: 10px;
+  color: grey;
 }
 
-/*.numer1 { background: #354f5d; width: 750px; height: 600px; text-align: center; }
-*/
+h3
+{
+  font-family: 'Ubuntu', sans-serif;
+	font-size: 30px;
+	font-weight: 200;
+	text-align: center;
+	letter-spacing: 3px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+  border-radius: 10px;
+  color: grey;
+}
+
 .navbar a {
     color: #fff;
 }
 
 .center {
-text-align: center;
+text-align: left;
 }
-/*.vcenter {
-padding-top: 30px;
-padding-bottom: 30px;
-}*/
 
 #frm{
     border: solid gray 1px;
     width: 20%;
     border-radius: 5px;
     margin: 100px auto;
-    background: bisque;
+	  background-color: #c8cccf;
     padding: 50px;
     text-align: center;
+    letter-spacing: 2px;
 }
 
 #btn{
     color: #fff;
-    background: #337ab7;
+    background: red;
     padding: 5px;
     margin-left: 70%;
 }
+
+.container
+{
+	width: 200px;
+	padding: 40px 50px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 80px;
+
+}
+
+input[type=text],
+input[type=email],
+input[type=password]
+{
+	width: 300px;
+	background-color: #f3f3f3;
+	color: rgb(109, 108, 108);
+	border: 2px solid #ddd;
+	border-radius: 5px;
+  font-size: 16px;
+	padding: 5px;
+	box-sizing: border-box;
+	outline: none;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+button, input[type=submit].dodaj, input[type=button].dodaj
+{
+	width: 200px;
+	background-color: #6098f2;
+	font-size: 20px;
+	color: white;
+	padding: 5px 5px;
+	margin-top: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	letter-spacing: 2px;
+	outline: none;
+}
+
+button:hover, input[type=submit].dodaj:hover, input[type=button].dodaj:hover
+{
+	background-color: #8a8f94;
+}
+
+input[type=submit],
+input[type=button]
+{
+	width: 150px;
+	background-color: #8a8f94;
+	font-size: 20px;
+	color: white;
+	padding: 5px 5px;
+	margin-top: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	letter-spacing: 2px;
+	outline: none;
+}
+
+input[type=submit]:focus
+{
+	-webkit-box-shadow: 0px 0px 15px 5px rgba(204,204,204,0.9);
+	-moz-box-shadow: 0px 0px 15px 5px rgba(204,204,204,0.9);
+	box-shadow: 0px 0px 15px 5px rgba(204,204,204,0.9);
+}
+
+input[type=submit]:hover,
+input[type=button]:hover
+{
+	background-color: #6098f2;
+}
+
+th, td
+{
+	border: 1px solid rgb(27, 27, 27);
+	padding: 5px;
+	width: 20%;
+}
+
+.error{
+  color:red;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+::placeholder { /* Firefox, Chrome, Opera */ 
+  color: rgb(180, 180, 180); 
+} 
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+  color: rgb(180, 180, 180); 
+} 
+
+::-ms-input-placeholder { /* Microsoft Edge */ 
+  color: rgb(180, 180, 180); 
+} 

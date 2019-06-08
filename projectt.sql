@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Czas generowania: 01 Cze 2019, 12:53
+-- Czas generowania: 08 Cze 2019, 23:06
 -- Wersja serwera: 5.7.25
 -- Wersja PHP: 7.3.1
 
@@ -31,10 +31,13 @@ CREATE TABLE `klienci` (
 
 INSERT INTO `klienci` (`ID_Klienta`, `Klient`) VALUES
 (1, 'H&M Polska'),
-(2, 'Telekomunikacja'),
-(3, 'Opony.pl'),
-(4, 'Lidl'),
-(5, 'Wyższa Szkoła Bankowa');
+(2, 'Telekomunikacja S.A.'),
+(3, 'Biedronka S.A.'),
+(4, 'Lidl SA'),
+(5, 'Wyższa Szkoła Bankowa'),
+(6, 'Wedel'),
+(7, 'Nestle'),
+(8, 'Carlsberg');
 
 -- --------------------------------------------------------
 
@@ -58,10 +61,14 @@ CREATE TABLE `pracownicy` (
 INSERT INTO `pracownicy` (`ID_Pracownik`, `user`, `imie_nazwisko`, `email`, `pass`, `ID_Roles`) VALUES
 (1, 'Lukas', 'Lukasz Sucharski', 'lukasuch@yahoo.de', '$2y$10$SThaUcwFq0KqopXS0jmVuOhycW7hcJm/BZhgy3HJ.WS5ZEUSPCzma', 1),
 (2, 'Ola', 'Aleksandra Burzych', 'aburzych@gmail.com', '$2y$10$Pl0fWyucpICgwQ84JgvVc.gJIblZkR2psH3erGHXaFDU4sChqlXUi', 2),
-(3, 'Asia', 'Joanna Pawlik', 'joanna.pawlik85@gmail.com', '$2y$10$sKyCruyy1sTGXh/dd6qEA./jucTmZMQ2C1jyBdRvQhAZ5EWPobZO.', 3),
+(3, 'Asia', 'Joanna Kowalska', 'joanna.kowalska@gmail.com', '$2y$10$sKyCruyy1sTGXh/dd6qEA./jucTmZMQ2C1jyBdRvQhAZ5EWPobZO.', 2),
 (4, 'Zbychu', 'Zbigniew Wielki', 'pifko88@wp.pl', '$2y$10$yVlTYBhca.DmeRY83K7deuI49s441WdsuMh54M4iOW9WOfOf0/5sG', 3),
 (5, 'Gienia', 'Genowefa Zielona', 'olaburzych@yahoo.com', '$2y$10$vOv.sWbAxTO0la3uqH.z5.ph52eWZXAsJINsII0UjDp4p2GRW0tNm', 3),
-(6, 'Alfredo', 'Alfred Hitchcock', 'olaburzych@wp.pl', '$2y$10$yrj7Raylnq1jBVQlWYj/lu4CrPZka.DQ./rqRXzpo1yxYY6xnloxW', 2);
+(6, 'Alfredo', 'Alfred Hitchcock', 'olaburzych@wp.pl', '$2y$10$yrj7Raylnq1jBVQlWYj/lu4CrPZka.DQ./rqRXzpo1yxYY6xnloxW', 2),
+(9, 'Kasik', 'Katarzyna Mała', 'kasiam@gmail.com', 'qwerty', 2),
+(10, 'Muniek', 'Mirosław Kowalski', 'mkow@wp.pl', 'qwerty', 3),
+(11, 'Waldi', 'Waldemar Krukon', 'wk@mk.pl', 'zxcvbn', 2),
+(12, 'Zocha', 'Zofia Nowak', 'zofia@gmail.com', '$2y$10$pHNh98CIlWX6Swm5CCYU/.71Fj8Yxgz1gDSO/SM/ZNMiROc03HMlm', 3);
 
 -- --------------------------------------------------------
 
@@ -84,7 +91,10 @@ CREATE TABLE `projekty` (
 
 INSERT INTO `projekty` (`ID_Projektu`, `Projekt`, `ID_Klienta`, `ID_Pracownik`, `Data_start`, `Data_stop`) VALUES
 (1, 'Sklep internetowy Buty24.pl', 1, 2, '2019-05-18', '2019-05-22'),
-(2, 'Baza dla Opony.pl', 3, 6, '2019-05-18', '2019-05-29');
+(2, 'Baza dla Opony.pl', 3, 6, '2019-05-18', '2019-05-29'),
+(18, 'Aplikacja internetowa', 2, 2, '2019-06-07', '2019-06-30'),
+(19, 'Strategia marketingowa', 3, 4, '2019-06-12', '2019-07-31'),
+(20, 'Platforma społecznościowa', 8, 1, '2019-06-17', '2019-10-31');
 
 -- --------------------------------------------------------
 
@@ -107,7 +117,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`ID_Roles`, `rolename`, `admin`, `czytaj`, `edytuj`) VALUES
 (1, 'admin', 1, 0, 0),
 (2, 'pm', 0, 0, 1),
-(3, 'gosc', 0, 1, 0);
+(3, 'reader', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -119,8 +129,26 @@ CREATE TABLE `tracker` (
   `ID_Tracker` int(11) NOT NULL,
   `ID_Projekt` int(11) NOT NULL,
   `ID_Zadanie` int(11) NOT NULL,
-  `ID_Pracownik` int(11) NOT NULL
+  `ID_Pracownik` int(11) NOT NULL,
+  `Estymowany_czas` int(11) NOT NULL,
+  `Realizowany_czas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `tracker`
+--
+
+INSERT INTO `tracker` (`ID_Tracker`, `ID_Projekt`, `ID_Zadanie`, `ID_Pracownik`, `Estymowany_czas`, `Realizowany_czas`) VALUES
+(1, 1, 1, 6, 40, 8),
+(2, 1, 6, 3, 36, 0),
+(5, 1, 5, 1, 120, 34),
+(6, 1, 4, 2, 80, 12),
+(7, 18, 10, 12, 36, 42),
+(8, 18, 4, 6, 70, 32),
+(9, 18, 5, 11, 90, 0),
+(10, 2, 9, 3, 34, 0),
+(11, 19, 3, 10, 48, 0),
+(12, 19, 10, 3, 16, 3);
 
 -- --------------------------------------------------------
 
@@ -139,11 +167,15 @@ CREATE TABLE `zadania` (
 
 INSERT INTO `zadania` (`ID_Zadanie`, `opis`) VALUES
 (1, 'Projekt graficzny'),
-(2, 'Import danych'),
-(3, 'Strategia'),
+(2, 'Konfiguracja hostingu'),
+(3, 'Strategia digitalowa'),
 (4, 'Frontend development'),
 (5, 'Backend development'),
-(6, 'Makieta');
+(6, 'Makieta serwisu'),
+(7, 'Strategia contentowa'),
+(8, 'Testy serwisu'),
+(9, 'Zbieranie wymagań serwisu'),
+(10, 'Analiza konkurencji');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -199,19 +231,19 @@ ALTER TABLE `zadania`
 -- AUTO_INCREMENT dla tabeli `klienci`
 --
 ALTER TABLE `klienci`
-  MODIFY `ID_Klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID_Klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `pracownicy`
 --
 ALTER TABLE `pracownicy`
-  MODIFY `ID_Pracownik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_Pracownik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT dla tabeli `projekty`
 --
 ALTER TABLE `projekty`
-  MODIFY `ID_Projektu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_Projektu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT dla tabeli `roles`
@@ -223,13 +255,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT dla tabeli `tracker`
 --
 ALTER TABLE `tracker`
-  MODIFY `ID_Tracker` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Tracker` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT dla tabeli `zadania`
 --
 ALTER TABLE `zadania`
-  MODIFY `ID_Zadanie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID_Zadanie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ograniczenia dla zrzutów tabel
