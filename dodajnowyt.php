@@ -8,6 +8,7 @@ $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 //$rezultat2 = $polaczenie->query("SELECT * FROM projekty "); 
 $rezultat3 = $polaczenie->query("SELECT * FROM zadania"); 
 $rezultat4 = $polaczenie->query("SELECT * FROM pracownicy"); 
+$polaczenie->set_charset("utf8");
 
 if(isset($_GET['edit_id']))
 {

@@ -6,6 +6,7 @@ mysqli_report(MYSQLI_REPORT_STRICT);
 
 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 $rezultat2 = $polaczenie->query("SELECT * FROM roles"); 
+$polaczenie->set_charset("utf8");
 
 if(isset($_POST['user']))
 {

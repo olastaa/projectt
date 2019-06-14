@@ -11,6 +11,7 @@ if(!isset($_SESSION['zalogowany']))
 require_once "connect.php";
 mysqli_report(MYSQLI_REPORT_STRICT);
 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name); 
+$polaczenie->set_charset("utf8");
 
 if(isset($_GET['edit_id']))
 {
@@ -36,7 +37,7 @@ if(isset($_POST['update']))
         die("Nieudane połączenie: " . $conn->connect_error);
     } else {
         $rezultat = $polaczenie->query("UPDATE tracker SET Realizowany_czas = Realizowany_czas + $dodatkowyCzas WHERE ID_Tracker =" .$_GET['edit_id']);
-        echo "<meta http-equiv='refresh' content=0;url='projekt.php";
+        echo "<meta http-equiv='refresh' content=0;url='projekty.php";
     }
 }
 ?>

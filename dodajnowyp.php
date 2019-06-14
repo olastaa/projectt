@@ -5,6 +5,7 @@ require_once "connect.php";
 mysqli_report(MYSQLI_REPORT_STRICT);
 
 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+$polaczenie->set_charset("utf8");
 $rezultat2 = $polaczenie->query("SELECT * FROM klienci ORDER BY Klient ASC"); 
 $rezultat3 = $polaczenie->query("SELECT * FROM pracownicy ORDER BY imie_nazwisko ASC");  
 

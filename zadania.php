@@ -13,6 +13,7 @@ mysqli_report(MYSQLI_REPORT_STRICT);
 
 
 $db = new mysqli($host, $db_user, $db_password, $db_name);
+$db->set_charset("utf8");
 if ($db -> connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }

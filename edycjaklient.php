@@ -11,6 +11,7 @@ if(!isset($_SESSION['zalogowany']))
 require_once "connect.php";
 mysqli_report(MYSQLI_REPORT_STRICT);
 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name); 
+$polaczenie->set_charset("utf8");
 
 if(isset($_GET['edit_id']))
 {

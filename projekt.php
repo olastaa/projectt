@@ -11,6 +11,7 @@ if(!isset($_SESSION['zalogowany']))
 require_once "connect.php";
 mysqli_report(MYSQLI_REPORT_STRICT);
 $db = new mysqli($host, $db_user, $db_password, $db_name);
+$db->set_charset("utf8");
 
 if ($db -> connect_error) {
   die("Connection failed: " . $conn->connect_error);
@@ -65,7 +66,7 @@ if(isset($_GET['edit_id']))
         <?php 
         }   ?>
         <br>
-        <a href='edycjaprojekt.php?edit_id="<?php echo $edit_id;?>"' alt='edit'>Edytuj dane projektu</a>
+        <a href='edycjaprojekt.php?edit_id=<?php echo $edit_id;?>' alt='edit'>Edytuj dane projektu</a>
         <br>    
         <br>
         <h2>Zadania w projekcie:</h2>
